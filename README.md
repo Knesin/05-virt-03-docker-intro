@@ -48,9 +48,9 @@ Hey, Netology
 ---
 ## Решение 2
 
-- `docker run --name "KME-custom-nginx-t2" -d -p 8080:80 makskl/custom-nginx:1.0.0`
-- `docker rename KME-custom-nginx-t2 custom-nginx-t2`
--  Экран
+- Запуск контейнера `docker run --name "KME-custom-nginx-t2" -d -p 8080:80 makskl/custom-nginx:1.0.0`
+- Переименование контейнера `docker rename KME-custom-nginx-t2 custom-nginx-t2`
+-  Экран с результатом
 
     ![Screen1](img/img1.png)
 
@@ -75,15 +75,15 @@ Hey, Netology
 ---
 ## Решение 3
 
-- `docker attach custom-nginx-t2`
+- Подключение к стандартным потокам ввода/вывода контейнера `docker attach custom-nginx-t2`
 - Результат после Ctrl-C
 
     ![Screen2](img/img2.png)
 
 - После Ctrl-C контейнер закрылся, т.к. мы на прямую подключились к процессу контейнера и завершили его.
-- `docker start  custom-nginx-t2`
-- `docker exec -it custom-nginx-t2 bash`
-- `apt-get update && apt-get install -y nano`
+- Повторный запуск контейнера `docker start  custom-nginx-t2`
+- Подключение к контейнеру в новом терминале `docker exec -it custom-nginx-t2 bash`
+- Обновление репозиториев и установка nano`apt-get update && apt-get install -y nano`
 
     ![Screen3](img/img3.png)
 
@@ -197,8 +197,8 @@ services:
 
     ![Screen13](img/img13.png)
 
-- `docker tag makskl/custom-nginx:1.0.0 localhost:5000/custom-nginx:latest`
-- `docker push localhost:5000/custom-nginx:latest`
+- Создание тега `docker tag makskl/custom-nginx:1.0.0 localhost:5000/custom-nginx:latest`
+- Заливка `docker push localhost:5000/custom-nginx:latest`
 - Настройка на странице https://127.0.0.1:9443/
 - После настройки 
 
@@ -212,9 +212,9 @@ services:
 
     ![Screen16](img/img16.png)
 
-- Завершение `docker compose down`
+- Завершение `docker compose down` или если не делать предыдущий шаг то `docker compose down --remove-orphans`
 
-    ![Screen16](img/img16.png)
+    ![Screen17](img/img17.png)
 
 ---
 
