@@ -50,7 +50,9 @@ Hey, Netology
 
 - `docker run --name "KME-custom-nginx-t2" -d -p 8080:80 makskl/custom-nginx:1.0.0`
 - `docker rename KME-custom-nginx-t2 custom-nginx-t2`
--  ![Screen1](img/img1.png)
+-  Экран
+
+    ![Screen1](img/img1.png)
 
 ---
 
@@ -73,6 +75,31 @@ Hey, Netology
 ---
 ## Решение 3
 
+- `docker attach custom-nginx-t2`
+- Результат после Ctrl-C
+
+    ![Screen2](img/img2.png)
+
+- После Ctrl-C контейнер закрылся, т.к. мы на прямую подключились к процессу контейнера и завершили его.
+- `docker start  custom-nginx-t2`
+- `docker exec -it custom-nginx-t2 bash`
+- `apt-get update && apt-get install -y nano`
+
+    ![Screen3](img/img3.png)
+
+- Результат редактирования, перезагрузки и проверки ответов nginx
+
+    ![Screen4](img/img4.png)
+
+- Результат проверок на хосте
+
+    ![Screen5](img/img5.png)
+
+- Т.к. внутри контейнера nginx стал работать на 81 порту, а при создании контеинера мы соединяли 80 порт с 8080, то в результате ответа больше нет.
+- Удаление контейнера `docker rm -f custom-nginx-t2` 
+
+    ![Screen6](img/img6.png)
+
 ---
 
 ## Задача 4
@@ -90,6 +117,24 @@ Hey, Netology
 ---
 ## Решение 4
 
+- Скачиваем контейнеры
+  - `docker pull debian`
+  - `docker pull centos:centos7`
+  - ![Screen7](img/img7.png)
+- Запускаем centos и debian
+  - `docker run -v $(pwd):/data --name "cent" -d centos:centos7 sleep infinity`
+  - `docker run -v $(pwd):/data --name "deb" -d debian:latest sleep infinity`
+  - ![Screen8](img/img8.png)
+- Подключение к centos и создание файла
+  - `docker exec -it cent bash`
+  - `echo "Test file make in centos" >> /data/cent.txt`
+  - ![Screen9](img/img9.png)
+- Создание файла на хосте `echo "Test file make in host" >> host.txt`
+  - ![Screen10](img/img10.png)
+- Проверка содержимого во втором контейнере
+  - `docker exec -it deb bash`
+  - ![Screen11](img/img11.png)
+  
 ---
 
 
@@ -143,6 +188,33 @@ services:
 
 ---
 ## Решение 5
+
+- Будет запущен compose.yaml, т.к. при конфликте приоритет имен будет такой `compose.yamlcompose.ymldocker-compose.yamldocker-compose.ymlcompose.yaml`
+    
+    ![Screen12](img/img12.png)
+
+- Надо дописать include:
+
+    ![Screen13](img/img13.png)
+
+- `docker tag makskl/custom-nginx:1.0.0 localhost:5000/custom-nginx:latest`
+- `docker push localhost:5000/custom-nginx:latest`
+- Настройка на странице https://127.0.0.1:9443/
+- После настройки 
+
+    ![Screen14](img/img14.png)
+
+- Скриншот от поля "AppArmorProfile" до "Driver"
+
+    ![Screen15](img/img15.png)
+
+- Предупреждение предлагает выполнить `docker compose up -d --remove-orphans` чтоб удалить контейнер который раньше был в этом компоузе
+
+    ![Screen16](img/img16.png)
+
+- Завершение `docker compose down`
+
+    ![Screen16](img/img16.png)
 
 ---
 
